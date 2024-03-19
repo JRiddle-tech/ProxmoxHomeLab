@@ -7,11 +7,17 @@
 
 <p>Stable Diffusion is a generative AI model that generates images from text and image prompts. My passion for technology came from using my gaming PC to run Stable Diffusion, which at first was challenging as I didn’t have any experience with Python, but after learning some Python and being able to troubleshoot some errors, then using Ubuntu to run Stable Diffusion, I was hooked!<p/> 
 
-The purpose of this guide is to document my experience with configuring Proxmox after installation, and some of the challenges that I faced along the way with passing through the GPU to a VM.  
+<p>The purpose of this guide is to document my experience with configuring Proxmox after installation, and some of the challenges that I faced along the way with passing through the GPU to a VM. Please note that the steps outlined here may not work exactly the same on every hardware and software configuration.</p>
+
+<p>To enable GPU passthrough on your Proxmox VE setup, your hardware must support IOMMU (I/O Memory Management Unit) and interrupt remapping capabilities. This requirement extends to both your CPU and motherboard.</p>
+
+<h3>Hardware</h3> <ul> <li><strong>Motherboard:</strong> Asus ROG Strix Z590-I LGA 1200 <em>BIOS version: 2002 (10/03/2023)</em></li> <li><strong>CPU:</strong> Intel Core i7-10700K 3.8GHz, 8-cores</li> <li><strong>Memory:</strong> G.Skill Trident Z, 32GB DDR4 @ 2933MHz</li> <li><strong>GPU:</strong> NVIDIA GeForce RTX 3080</li> </ul>
+
 
 I referenced the documentation following documentation from Proxmox:
 - https://pve.proxmox.com/wiki/Install_Proxmox_VE_on_Debian_12_Bookworm
 - https://pve.proxmox.com/wiki/PCI(e)_Passthrough
+- https://www.reddit.com/r/homelab/comments/b5xpua/the_ultimate_beginners_guide_to_gpu_passthrough/
 
 <br />
 
@@ -33,7 +39,7 @@ I referenced the documentation following documentation from Proxmox:
 <p>Run the following command to remove the Debian kernel:</p> <p> <code>apt remove linux-image-amd64 'linux-image-6.1*'</code> </p> <p>Update and check the GRUB configuration by running:</p> <p> <code>update-grub</code> </p> 
 
 
- <h2>PCIe Passthrough</h2>
+ <h1>PCIe Passthrough</h1>
 
 
 </p>
