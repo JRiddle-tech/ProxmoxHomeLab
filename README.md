@@ -39,13 +39,34 @@ I referenced the documentation following documentation from Proxmox:
 <p>Run the following command to remove the Debian kernel:</p> <p> <code>apt remove linux-image-amd64 'linux-image-6.1*'</code> </p> <p>Update and check the GRUB configuration by running:</p> <p> <code>update-grub</code> </p> 
 
 
- <h1>PCIe Passthrough</h1>
+<h1>Configuring BIOS Settings for Hardware Virtualization and IOMMU Groups</h1>
+
+<p>Now that Proxmox is set up and updates are enabled, it's time to configure some BIOS settings to support hardware virtualization and IOMMU groups.</p>
+
+<div style="display: flex; align-items: center;">
+  <div style="flex: 1;">
+    <p align="center"> BIOS IOMMU settings<br/> </p>
+    <img src="https://i.imgur.com/WxCUone.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
+  </div>
+  <div style="flex: 1; padding-left: 20px;">
+  </div>
+</div>
+
+<h2>What is IOMMU?</h2>
+
+<p>When an operating system is running inside a virtual machine, it typically does not have direct access to the physical memory of the host system. Instead, it sees a virtualized view of the memory, which is managed by the hypervisor (Proxmox uses KVM).</p> 
+
+<p>Input–output memory management unit (IOMMU) groups are used in virtualization environments to enable the hypervisor to map its underlying hardware to both a device-visible virtual address and a physical address. As a result, in order for the GPU to be safely used inside of a VM without corrupting the memory of the host machine, IOMMU groups assist maintaining stability and performance by ensuring that the guest operating system only has access to the memory it is supposed to, and that it cannot interfere with the memory of other virtual machines or the host system. </p>
 
 
-</p>
-
-
-
+<div style="display: flex; align-items: center;">
+  <div style="flex: 1;">
+    <p align="center"> Enabled Memory Remap<br/> </p>
+    <img src="https://i.imgur.com/ypiL0H4.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
+  </div>
+  <div style="flex: 1; padding-left: 20px;">
+  </div>
+</div>
 <!--
  ```diff
 - text in red
