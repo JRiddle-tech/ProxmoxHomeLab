@@ -67,6 +67,44 @@ I referenced the documentation following documentation from Proxmox:
   <div style="flex: 1; padding-left: 20px;">
   </div>
 </div>
+
+
+
+<div style="display: flex; align-items: center;">
+  <div style="flex: 1;">
+    <p align="center"> CPU graphics<br/> </p>
+    <img src="https://i.imgur.com/vPhy2t6.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
+  </div>
+  <div style="flex: 1; padding-left: 20px;">
+  </div>
+</div>
+
+
+
+<div style="display: flex; align-items: center;">
+  <div style="flex: 1;">
+    <p align="center"> SR-IOV enabled<br/> </p>
+    <img src="https://i.imgur.com/r8gAZDa.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
+  </div>
+  <div style="flex: 1; padding-left: 20px;">
+  </div>
+</div>
+
+
+<div style="display: flex; align-items: center;">
+  <div style="flex: 1;">
+    <p align="center"> VM GPU on Windows host<br/> </p>
+    <img src="https://i.imgur.com/LXNCb2z.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
+  </div>
+  <div style="flex: 1; padding-left: 20px;">
+  </div>
+</div>
+
+
+
+
+
+
 <!--
  ```diff
 - text in red
