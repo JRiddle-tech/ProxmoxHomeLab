@@ -93,16 +93,22 @@ I referenced the documentation following documentation from Proxmox:
 
 <div style="display: flex; align-items: center;">
   <div style="flex: 1;">
-    <p align="center"> VM GPU on Windows host<br/> </p>
-    <img src="https://i.imgur.com/LXNCb2z.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
+    <p align="center"> <br/> </p>
+    <img src="https://i.imgur.com/f8awi1U.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
   </div>
   <div style="flex: 1; padding-left: 20px;">
   </div>
 </div>
 
 
-
-
+<div style="display: flex; align-items: center;">
+  <div style="flex: 1;">
+    <p align="center"> <br/> Stable Diffusion - ComfyUI running on Windows Host in Proxmox </p>
+    <img src="https://i.imgur.com/J9DmR9E.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
+  </div>
+  <div style="flex: 1; padding-left: 20px;">
+  </div>
+</div>
 
 
 <!--
