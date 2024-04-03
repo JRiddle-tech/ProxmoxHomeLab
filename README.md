@@ -153,18 +153,41 @@ Your GPU should appear. For me, I had to select it from the 'raw devices' dropdo
 Rom-Bar: YES
 Primary GPU: NO
 PCI-Express: YES (requires 'machine: q35' in vm config file)</code></p>
-<div style="display: flex; align-items: center;"> <div style="flex: 1;"> <p align="center"> <br/> <img src="https://i.imgur.com/NnQnATu.png" height="100%" width="100%" alt="deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription"/> </p> </div> <div style="flex: 1; padding-left: 20px;">  </div> </div>
-
-
 
 <div style="display: flex; align-items: center;">
   <div style="flex: 1;">
-    <img src="https://i.imgur.com/f8awi1U.jpeg" style="height: 70%; width: auto;" alt=""/>
+    <img src="https://i.imgur.com/NnQnATu.png" style="height: 70%; width: auto;" alt=""/>
   </div>
   <div style="flex: 1; padding-left: 20px;">
   </div>
 </div>
 
+<P>Finally, change the Display to <code>No Display</code></P>
+<div style="display: flex; align-items: center;">
+  <div style="flex: 1;">
+    <img src="https://i.imgur.com/GwxuNTh.png" style="height: 70%; width: auto;" alt=""/>
+  </div>
+  <div style="flex: 1; padding-left: 20px;">
+  </div>
+</div>
+
+<h3>Download GPU drivers</h3>
+<p>After starting the VM and using RDP to view the Desktop, navigate to https://www.nvidia.com/download/index.aspx and install the display drivers for the GPU (3080). </p>
+<p>Reboot the VM and hopefully the NVIDIA drivers and control panel will be installed and available. </p>
+
+<h2>Conclusion</h2>
+<p>The process of installing and troubleshooting this was challenging, but after several days of trial and error, when it finally worked I was relieved. As such, I neglected to take any actual screenshots of the finished product, instead just a few shaky photos from my phone so I could share with my friends. </p>
+
+<br>
+
+<div style="display: flex; align-items: center;">
+  <div style="flex: 1;">
+    <p align="center"> <br/> Superposition Benchmark </p>
+    <img src="https://i.imgur.com/7WQz04C.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
+  </div>
+  <div style="flex: 1; padding-left: 20px;">
+  </div>
+</div>
 
 
 
@@ -177,6 +200,14 @@ PCI-Express: YES (requires 'machine: q35' in vm config file)</code></p>
   </div>
 </div>
 
+<div style="display: flex; align-items: center;">
+  <div style="flex: 1;">
+    <p align="center"> <br/> RTX 3080 </p>
+    <img src="https://i.imgur.com/f8awi1U.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
+  </div>
+  <div style="flex: 1; padding-left: 20px;">
+  </div>
+</div>
 
 <!--
  ```diff
