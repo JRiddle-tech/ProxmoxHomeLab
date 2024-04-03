@@ -38,6 +38,7 @@ I referenced the documentation following documentation from Proxmox:
 <p>I initially encountered some issues with upgrading Proxmox which may have been a result of not changing to the Proxmox VE kernel and keeping the Debian default kernel.</p> 
 <p>Run the following command to remove the Debian kernel:</p> <p> <code>apt remove linux-image-amd64 'linux-image-6.1*'</code> </p> <p>Update and check the GRUB configuration by running:</p> <p> <code>update-grub</code> </p> 
 
+<br></br>
 
 <h1>Configuring BIOS Settings for Hardware Virtualization and IOMMU Groups</h1>
 
@@ -89,7 +90,71 @@ I referenced the documentation following documentation from Proxmox:
 </div>
 
 
-<p>Next...</p>
+<p>After saving changes, run: <code>update-grub</code> and <code>reboot</code></p>
+
+<p> Add the relevant kernel modules by editing <code>/etc/modules</code> and adding in these lines:</p>
+<p> <code>vfio
+vfio_iommu_type1
+vfio_pci
+vfio_virqfd</code> </p>
+
+
+<p> Save changes and execute command:<code>update-initramfs -u -k all</code> </p>
+
+<p><code>reboot</code></p>
+
+<h2>Verifying IOMMU compatability </h2>
+<p>The following commands can be used to verify the environment is ready before creating a Virtual Machine for GPU passthrough</p>
+<p><code>pvesh get /nodes/{nodename}/hardware/pci --pci-class-blacklist ""</code></p>
+
+
+<div style="display: flex; align-items: center;">
+  <div style="flex: 1;">
+    <img src="https://i.imgur.com/10Tzg2C.png" style="height: 100%; width: auto;/>
+  </div>
+  <div style="flex: 1; padding-left: 20px;">
+  </div>
+</div> <p>If there are seperate IOMMU groups, then the updates have been successful. </p> <br></br>
+
+<h2>Virtual Machine Configuration</h2>
+<p>I used a Windows 10 VM with the following settings to test if the changes made would allow the host the be able to utilize the GPU without system instability</p>
+<p>Windows VM's require VirtIO drivers for SCSI controller and LAN, the drivers can be found here: (https://pve.proxmox.com/wiki/Windows_VirtIO_Drivers). </p>Add them as a disk drive that initializes when booting up the VM. The Proxmox VM machine configuration should show <code>CD/DVD drive (ide0)</code>like the image below.</p>
+
+
+<div style="display: flex; align-items: center;">
+  <div style="flex: 1;">
+    <img src="https://i.imgur.com/yFoA6RX.png" style="height: 70%; width: auto;" alt=""/>
+  </div>
+  <div style="flex: 1; padding-left: 20px;">
+  </div>
+</div>
+
+
+<p>Edit <code>/etc/pve/qemu-server/<vmid>.conf</vmid></code> and add the two following lines. It took several attempts to correctly configure the VM, so some troubleshooting may be necessary.</p> 
+<p><code>cpu: host,hidden=1,flags=+pcid
+ args: -cpu 'host,+kvm_pv_unhalt,+kvm_pv_eoi,hv_vendor_id=NV43FIX,kvm=off</code> </p> <br> 
+
+<p>Edit <code>/etc/modprobe.d/pve-blacklist.conf</code> and add the four following lines to tell Proxmox to not use any of these graphics drivers for itself: <div>
+<code>blacklist nvidiafb
+blacklist nvidia
+blacklist radeon
+blacklist nouveau
+</code></p> 
+<br></br>
+
+<h3>Start Windows VM</h3>
+<p>Before adding in the PCI passthrough, access the Windows VM and check that everything is working as expected. Note, if your CPU doesn't support integrated graphics, you will need a way to view the output of the Windows VM. Although my CPU supports integrated graphics, I encountered issues with Proxmox crashing, so I used Remote Desktop Protocol (RDP) from a seperate Windows VM to access the VM PCI passthrough. Set up RDP first before the next steps. </p>
+<p> With the Windows VM working as normal without GPU passthrough, shutdown the VM so that it can be added.</p>
+
+<h3>Add PCI device</h3>
+<p>Navigate to the Hardware Tab or Window of your virtual machine, and click on the Add button located at the top. From the dropdown menu, select PCI Device.
+Your GPU should appear. For me, I had to select it from the 'raw devices' dropdown.</p>
+<p><code>All Functions: YES
+Rom-Bar: YES
+Primary GPU: NO
+PCI-Express: YES (requires 'machine: q35' in vm config file)</code></p>
+<div style="display: flex; align-items: center;"> <div style="flex: 1;"> <p align="center"> <br/> <img src="https://i.imgur.com/NnQnATu.png" height="100%" width="100%" alt="deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription"/> </p> </div> <div style="flex: 1; padding-left: 20px;">  </div> </div>
+
 
 
 <div style="display: flex; align-items: center;">
@@ -100,7 +165,8 @@ I referenced the documentation following documentation from Proxmox:
   </div>
 </div>
 
-<p> <code>systemctl reboot</code> </p>
+
+
 
 <div style="display: flex; align-items: center;">
   <div style="flex: 1;">
