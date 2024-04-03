@@ -43,15 +43,6 @@ I referenced the documentation following documentation from Proxmox:
 
 <p>Now that Proxmox is set up and updates are enabled, it's time to configure some BIOS settings to support hardware virtualization and IOMMU groups.</p>
 
-<div style="display: flex; align-items: center;">
-  <div style="flex: 1;">
-    <p align="center"> BIOS IOMMU settings<br/> </p>
-    <img src="https://i.imgur.com/WxCUone.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
-  </div>
-  <div style="flex: 1; padding-left: 20px;">
-  </div>
-</div>
-
 <h2>What is IOMMU?</h2>
 
 <p>When an operating system is running inside a virtual machine, it typically does not have direct access to the physical memory of the host system. Instead, it sees a virtualized view of the memory, which is managed by the hypervisor (Proxmox uses KVM).</p> 
@@ -59,10 +50,16 @@ I referenced the documentation following documentation from Proxmox:
 <p>Input–output memory management unit (IOMMU) groups are used in virtualization environments to enable the hypervisor to map its underlying hardware to both a device-visible virtual address and a physical address. As a result, in order for the GPU to be safely used inside of a VM without corrupting the memory of the host machine, IOMMU groups assist maintaining stability and performance by ensuring that the guest operating system only has access to the memory it is supposed to, and that it cannot interfere with the memory of other virtual machines or the host system. </p>
 
 
+<p>Below are the BIOS changes that I had the ability to change to improve compatibility with PCIe passthrough</p>
+<ol> <li>Enable Virtualisation (VT-d) and any options that support IOMMU.</li> <li>Enable SR-IOV (Single Root I/O Virtualization)</li> <li>Enable CPU discrete graphics</li> </ol> </div> </div>
+
+
+<div style="display: flex; align-items: center;"> <div style="flex: 1;"> <img src="https://i.imgur.com/WxCUone.jpeg" style="height: 70%; width: auto;" alt=""/> </div> <div style="flex: 1; padding-left: 20px;"> 
+
+
 <div style="display: flex; align-items: center;">
   <div style="flex: 1;">
-    <p align="center"> Enabled Memory Remap<br/> </p>
-    <img src="https://i.imgur.com/ypiL0H4.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
+    <img src="https://i.imgur.com/vPhy2t6.jpeg" style="height: 70%; width: auto;" alt=""/>
   </div>
   <div style="flex: 1; padding-left: 20px;">
   </div>
@@ -72,34 +69,38 @@ I referenced the documentation following documentation from Proxmox:
 
 <div style="display: flex; align-items: center;">
   <div style="flex: 1;">
-    <p align="center"> CPU graphics<br/> </p>
-    <img src="https://i.imgur.com/vPhy2t6.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
+    <img src="https://i.imgur.com/r8gAZDa.jpeg" style="height: 70%; width: auto;" alt=""/>
   </div>
   <div style="flex: 1; padding-left: 20px;">
   </div>
 </div>
 
+
+<h2>Adding PCIe & IOMMU kernel command line options</h2> 
+<p> Return to the Proxmox shell and use a text editor to add the below line to <code>/etc/default/grub</code> </p> 
+<p> <code>GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on pcie_acs_override=downstream,multifunction video=efifb:off pcie_port_pm=off"</code> </p>
+
+<div style="display: flex; align-items: center;">
+  <div style="flex: 1;">
+    <img src="https://i.imgur.com/XkLKdPh.png" style="height: 100%; width: auto;" alt="BIOS settings"/>
+  </div>
+  <div style="flex: 1; padding-left: 20px;">
+  </div>
+</div>
+
+
+<p>Next...</p>
 
 
 <div style="display: flex; align-items: center;">
   <div style="flex: 1;">
-    <p align="center"> SR-IOV enabled<br/> </p>
-    <img src="https://i.imgur.com/r8gAZDa.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
+    <img src="https://i.imgur.com/f8awi1U.jpeg" style="height: 70%; width: auto;" alt=""/>
   </div>
   <div style="flex: 1; padding-left: 20px;">
   </div>
 </div>
 
-
-<div style="display: flex; align-items: center;">
-  <div style="flex: 1;">
-    <p align="center"> <br/> </p>
-    <img src="https://i.imgur.com/f8awi1U.jpeg" style="height: 70%; width: auto;" alt="BIOS settings"/>
-  </div>
-  <div style="flex: 1; padding-left: 20px;">
-  </div>
-</div>
-
+<p> <code>systemctl reboot</code> </p>
 
 <div style="display: flex; align-items: center;">
   <div style="flex: 1;">
